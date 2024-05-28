@@ -6,27 +6,17 @@ on:
       - main # Trigger on pushes to the main branch
 
 jobs:
-  build_and_deploy:
-    runs-on: ubuntu-latest # Run this job on the latest Ubuntu runner
-
+  deploy:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3 # Use v3 for the latest features and fixes
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.3
         with:
-          node-version: "18" # Match the Node version with your Dockerfile
+          ssh-private-key: ${{ secrets.SSH_KEY }}
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          push: true
-          tags: username/cosmos:latest # Replace 'username' with your Docker Hub username
+      - name: Deploy to Server
+        run: |
+          ssh -o StrictHostKeyChecking=no username@your-server-ip 'deploy-commands-here'
