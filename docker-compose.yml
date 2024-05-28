@@ -3,13 +3,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: ghcr.io/silasfelinus/cosmos
     container_name: cosmos
     ports:
-      - "3009:3000"
+      - "3019:3000"
     expose:
       - 3000
     volumes:
-      - /mnt/user/appdata/cosmos:/
+      - /mnt/europa/appdata/cosmos:/
     restart: unless-stopped
     environment:
 
