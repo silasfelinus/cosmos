@@ -14,9 +14,6 @@ services:
     restart: unless-stopped
     environment:
 
-    labels:
-      -  "traefik.enable: true"
-      -  "traefik.http.routers.cosmos.entryPoints: https"
     networks:
       - cafepurr
 networks:
